@@ -4,15 +4,56 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.presto.prezto.feature_auth.presentation.login.LoginScreen
+import com.presto.prezto.feature_auth.presentation.register.RegisterScreen
 import com.presto.prezto.feature_explore.presentation.home.HomeScreen
+import com.presto.prezto.feature_explore.presentation.item_detail.ItemDetailScreen
+import com.presto.prezto.feature_auth.presentation.splash.SplashScreen
 
 @Composable
 fun PrestoNavigation() {
     val navController = rememberNavController()
+
     NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = "splash"
     ) {
+        composable("splash") {
+            SplashScreen(
+                onNavigateNext = {
+                    navController.navigate("login") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable("login") {
+            LoginScreen(
+                onNavigateToHome = {
+                    navController.navigate("home") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                },
+                onNavigateToRegister = {
+                    navController.navigate("register")
+                }
+            )
+        }
+
+        composable("register") {
+            RegisterScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToHome = {
+                    navController.navigate("home") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable("home") {
             HomeScreen(
                 onNavigateToDetail = { itemId ->
@@ -20,8 +61,13 @@ fun PrestoNavigation() {
                 }
             )
         }
-        composable("item_detail/{itemId}") { backStackEntry ->
-            val itemId = backStackEntry.arguments?.getString("itemId")
+        composable("item_detail/{itemId}") {
+            ItemDetailScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
+
     }
 }
