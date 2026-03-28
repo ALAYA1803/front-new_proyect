@@ -9,6 +9,7 @@ import com.presto.prezto.feature_auth.presentation.register.RegisterScreen
 import com.presto.prezto.feature_explore.presentation.home.HomeScreen
 import com.presto.prezto.feature_explore.presentation.item_detail.ItemDetailScreen
 import com.presto.prezto.feature_auth.presentation.splash.SplashScreen
+import com.presto.prezto.feature_profile.presentation.profile.ProfileScreen
 
 @Composable
 fun PrestoNavigation() {
@@ -58,6 +59,9 @@ fun PrestoNavigation() {
             HomeScreen(
                 onNavigateToDetail = { itemId ->
                     navController.navigate("item_detail/$itemId")
+                },
+                onNavigateToProfile = {
+                    navController.navigate("profile")
                 }
             )
         }
@@ -65,6 +69,16 @@ fun PrestoNavigation() {
             ItemDetailScreen(
                 onNavigateBack = {
                     navController.popBackStack()
+                }
+            )
+        }
+        composable("profile") {
+            ProfileScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onLogoutClick = {
+                    navController.navigate("login") {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             )
         }
