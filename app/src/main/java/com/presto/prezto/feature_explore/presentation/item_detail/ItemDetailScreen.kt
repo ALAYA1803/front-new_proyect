@@ -38,7 +38,6 @@ fun ItemDetailScreen(
 
     Scaffold(
         topBar = {
-            // UX: Barra superior transparente para darle protagonismo a la foto
             TopAppBar(
                 title = { },
                 navigationIcon = {
@@ -46,7 +45,7 @@ fun ItemDetailScreen(
                         onClick = onNavigateBack,
                         modifier = Modifier
                             .padding(8.dp)
-                            .background(Color.Black.copy(alpha = 0.5f), CircleShape) // Fondo sutil para que la flecha se vea sobre cualquier foto
+                            .background(Color.Black.copy(alpha = 0.5f), CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -59,7 +58,6 @@ fun ItemDetailScreen(
             )
         },
         bottomBar = {
-            // UX: Sticky CTA - El botón verde siempre visible en la parte inferior
             if (state.item != null && !state.isLoading) {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
@@ -116,10 +114,7 @@ fun ItemDetailScreen(
 
 @Composable
 private fun ItemDetailContent(item: Item, modifier: Modifier = Modifier) {
-    // verticalScroll permite que el usuario baje a leer toda la descripción
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-
-        // 1. Imagen Inmersiva (Hero Image)
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(item.imageUrl)
@@ -128,12 +123,11 @@ private fun ItemDetailContent(item: Item, modifier: Modifier = Modifier) {
             contentDescription = item.title,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp), // UX: Imagen grande para generar deseo y mostrar estado
+                .height(300.dp),
             contentScale = ContentScale.Crop
         )
 
         Column(modifier = Modifier.padding(24.dp)) {
-            // 2. Título y Estado
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -164,8 +158,6 @@ private fun ItemDetailContent(item: Item, modifier: Modifier = Modifier) {
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            // 3. Precios Destacados
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -195,8 +187,6 @@ private fun ItemDetailContent(item: Item, modifier: Modifier = Modifier) {
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            // 4. Trust Score (Simulación visual para generar confianza)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
@@ -218,8 +208,6 @@ private fun ItemDetailContent(item: Item, modifier: Modifier = Modifier) {
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            // 5. Descripción
             Text(
                 text = "Descripción",
                 style = MaterialTheme.typography.titleMedium,
@@ -231,10 +219,8 @@ private fun ItemDetailContent(item: Item, modifier: Modifier = Modifier) {
                 text = item.description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.5f // UX: Mejor legibilidad
+                lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.5f
             )
-
-            // Espacio extra al final para que el scroll no quede tapado por el botón flotante
             Spacer(modifier = Modifier.height(80.dp))
         }
     }

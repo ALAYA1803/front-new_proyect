@@ -23,7 +23,10 @@ fun PrestoTextField(
     leadingIcon: ImageVector? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: String? = null,
+    singleLine: Boolean = true,
+    minLines: Int = 1
+
 ) {
     OutlinedTextField(
         value = value,
@@ -39,7 +42,8 @@ fun PrestoTextField(
             }
         },
         keyboardOptions = keyboardOptions,
-        singleLine = true,
+        singleLine = singleLine,
+        minLines = minLines,
         shape = RoundedCornerShape(12.dp),
         modifier = modifier.fillMaxWidth(),
         colors = OutlinedTextFieldDefaults.colors(
